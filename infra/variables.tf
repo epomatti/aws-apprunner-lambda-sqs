@@ -1,0 +1,26 @@
+### General ###
+variable "aws_region" {
+  type = string
+}
+
+variable "workload" {
+  type = string
+}
+
+### ECR ###
+variable "ecr_image_tag" {
+  type = string
+}
+
+### App Runner ###
+variable "app_runner_workload" {
+  type = string
+}
+
+variable "app_runner_cpu" {
+  type = string
+}
+
+variable "app_runner_memory" {
+  type = string
+}
