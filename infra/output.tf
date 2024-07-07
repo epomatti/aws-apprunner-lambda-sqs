@@ -1,7 +1,3 @@
-# output "solution_instance_id" {
-#   value = module.wms_application.instance_id
-# }
-
-# output "security_instance_id" {
-#   value = module.security_jumpserver.instance_id
-# }
+output "apprunner_service_url" {
+  value = module.apprunner.service_url
+}

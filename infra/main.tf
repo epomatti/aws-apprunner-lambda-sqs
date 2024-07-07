@@ -11,10 +11,6 @@ provider "aws" {
   region = var.aws_region
 }
 
-locals {
-  # workoad = "easybank"
-}
-
 module "vpc" {
   source     = "./modules/vpc"
   aws_region = var.aws_region
@@ -34,7 +30,6 @@ module "iam" {
   source = "./modules/iam"
 }
 
-
 module "apprunner" {
   count             = var.enable_app_runner ? 1 : 0
   source            = "./modules/apprunner"
@@ -47,4 +42,6 @@ module "apprunner" {
   image_tag         = var.ecr_image_tag
   instance_role_arn = module.iam.instance_role_arn
   access_role_arn   = module.iam.access_role_arn
+
+  depends_on = [module.iam]
 }
