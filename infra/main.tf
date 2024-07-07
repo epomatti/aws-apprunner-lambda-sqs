@@ -45,3 +45,19 @@ module "apprunner" {
 
   depends_on = [module.iam]
 }
+
+module "iam_lambda" {
+  source   = "./modules/iam/lambda"
+  workload = var.workload
+}
+
+module "lambda" {
+  source             = "./modules/lambda"
+  name               = var.workload
+  execution_role_arn = module.iam_lambda.execution_role_arn
+  sqs_queue_name     = module.sqs.payments_queue_name
+  memory_size        = var.lambda_memory_size
+  timeout            = var.lambda_timeout
+
+  depends_on = [module.iam_lambda]
+}

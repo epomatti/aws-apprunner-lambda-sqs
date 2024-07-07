@@ -28,3 +28,12 @@ variable "app_runner_cpu" {
 variable "app_runner_memory" {
   type = string
 }
+
+### Lambda ###
+variable "lambda_memory_size" {
+  type = number
+}
+
+variable "lambda_timeout" {
+  type = number
+}
