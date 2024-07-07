@@ -25,4 +25,7 @@ module "ecr" {
   source = "./modules/ecr"
 }
 
-
+module "sqs" {
+  source   = "./modules/sqs"
+  workload = var.workload
+}
