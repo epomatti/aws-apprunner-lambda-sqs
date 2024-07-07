@@ -3,9 +3,11 @@
 account=$(aws sts get-caller-identity --query "Account" --output text)
 region="us-east-2"
 tag="latest"
-name="app-easybank"
+name="easybank"
+repositoryUrl=$account.dkr.ecr.$region.amazonaws.com
+repositoryImage=$repositoryUrl/$name:$tag
 
 docker build -t $name .
-docker tag $name "$account.dkr.ecr.$region.amazonaws.com/$name:$tag"
-aws ecr get-login-password --region $region | docker login --username AWS --password-stdin "$account.dkr.ecr.$region.amazonaws.com"
-docker push "$account.dkr.ecr.$region.amazonaws.com/$name:$tag"
+docker tag $name $repositoryImage
+aws ecr get-login-password --region $region | docker login --username AWS --password-stdin $repositoryUrl
+docker push $repositoryImage
