@@ -52,12 +52,14 @@ module "iam_lambda" {
 }
 
 module "lambda" {
-  source             = "./modules/lambda"
-  name               = var.workload
-  execution_role_arn = module.iam_lambda.execution_role_arn
-  sqs_queue_name     = module.sqs.payments_queue_name
-  memory_size        = var.lambda_memory_size
-  timeout            = var.lambda_timeout
+  source              = "./modules/lambda"
+  name                = var.workload
+  execution_role_arn  = module.iam_lambda.execution_role_arn
+  sqs_queue_name      = module.sqs.payments_queue_name
+  sqs_queue_arn       = module.sqs.payments_queue_arn
+  memory_size         = var.lambda_memory_size
+  timeout             = var.lambda_timeout
+  sqs_trigger_enabled = var.lambda_sqs_trigger_enabled
 
   depends_on = [module.iam_lambda]
 }

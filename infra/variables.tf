@@ -37,3 +37,7 @@ variable "lambda_memory_size" {
 variable "lambda_timeout" {
   type = number
 }
+
+variable "lambda_sqs_trigger_enabled" {
+  type = bool
+}

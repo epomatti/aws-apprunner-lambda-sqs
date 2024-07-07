@@ -29,8 +29,16 @@ resource "aws_lambda_function" "sqs" {
   }
 }
 
-# resource "aws_lambda_event_source_mapping" "sqs" {
-#   event_source_arn  = aws_dynamodb_table.accounts.stream_arn
-#   function_name     = aws_lambda_function.sqs.arn
-#   starting_position = "LATEST"
-# }
+resource "aws_lambda_event_source_mapping" "sqs" {
+  function_name                      = aws_lambda_function.sqs.arn
+  event_source_arn                   = var.sqs_queue_arn
+  enabled                            = var.sqs_trigger_enabled
+  batch_size                         = 10
+  maximum_batching_window_in_seconds = 0
+
+  # function_response_types = "ReportBatchItemFailures"
+
+  # scaling_config {
+  #   maximum_concurrency = 2
+  # }
+}
