@@ -3,6 +3,9 @@ locals {
   filename = "${path.module}/handler/lambda.zip"
 }
 
+# TODO: X-Ray
+# TODO: CloudWatch Application Insights
+# TODO: Structured Logging
 resource "aws_lambda_function" "sqs" {
   function_name    = var.name
   description      = "Lambda function for processing SQS messages"
