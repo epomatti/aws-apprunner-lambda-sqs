@@ -17,6 +17,11 @@ resource "aws_iam_role" "instance_role" {
   })
 }
 
+resource "aws_iam_role_policy_attachment" "tasks_sqs_full_access" {
+  role       = aws_iam_role.instance_role.name
+  policy_arn = "arn:aws:iam::aws:policy/AmazonSQSFullAccess"
+}
+
 ### Access Role ###
 resource "aws_iam_role" "access_role" {
   name = "AppRunnerAccessRole"
