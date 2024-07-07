@@ -1,5 +1,5 @@
 resource "aws_apprunner_service" "main" {
-  service_name = "apprunner-java-xray-${var.workload}"
+  service_name = "app-${var.workload}"
 
   instance_configuration {
     cpu               = var.cpu
@@ -46,24 +46,15 @@ resource "aws_apprunner_service" "main" {
 
 resource "aws_apprunner_vpc_connector" "connector" {
   vpc_connector_name = "vpcconn-${var.workload}"
-  subnets            = module.vpc.private_subnets
+  subnets            = var.private_subnets
   security_groups    = [aws_security_group.main.id]
-}
-
-
-module "nat-instance" {
-  source       = "./nat"
-  workload     = var.workload
-  vpc_id       = module.vpc.vpc_id
-  subnet       = module.vpc.public_subnets[0]
-  route_tables = module.vpc.priv_rts
 }
 
 ### Security Groups ###
 resource "aws_security_group" "main" {
   name        = "apprunner-${var.workload}"
   description = "Allow TLS inbound traffic"
-  vpc_id      = module.vpc.vpc_id
+  vpc_id      = var.vpc_id
 
   tags = {
     Name = "sg-apprunner-${var.workload}"

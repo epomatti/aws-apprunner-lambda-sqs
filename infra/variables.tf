@@ -13,6 +13,10 @@ variable "ecr_image_tag" {
 }
 
 ### App Runner ###
+variable "enable_app_runner" {
+  type = bool
+}
+
 variable "app_runner_workload" {
   type = string
 }
