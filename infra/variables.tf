@@ -41,3 +41,13 @@ variable "lambda_timeout" {
 variable "lambda_sqs_trigger_enabled" {
   type = bool
 }
+
+variable "lambda_username" {
+  type      = string
+  sensitive = true
+}
+
+variable "lambda_password" {
+  type      = string
+  sensitive = true
+}

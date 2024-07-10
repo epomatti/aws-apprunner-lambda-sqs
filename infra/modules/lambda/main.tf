@@ -6,12 +6,14 @@ locals {
 # TODO: X-Ray
 # TODO: CloudWatch Application Insights
 # TODO: Structured Logging
+# TODO: dead_letter_config
 resource "aws_lambda_function" "sqs" {
   function_name    = var.name
   description      = "Lambda function for processing SQS messages"
   role             = var.execution_role_arn
   filename         = local.filename
   source_code_hash = filebase64sha256(local.filename)
+  architectures    = ["x86_64"]
   runtime          = "python3.12"
   handler          = "app.lambda_handler"
 
@@ -23,6 +25,9 @@ resource "aws_lambda_function" "sqs" {
       SQS_QUEUE_NAME = var.sqs_queue_name
     }
   }
+
+  # https://docs.aws.amazon.com/systems-manager/latest/userguide/ps-integration-lambda-extensions.html#ps-integration-lambda-extensions-add
+  layers = ["arn:aws:lambda:us-east-2:590474943231:layer:AWS-Parameters-and-Secrets-Lambda-Extension:11"]
 
   lifecycle {
     ignore_changes = [
@@ -45,3 +50,5 @@ resource "aws_lambda_event_source_mapping" "sqs" {
   #   maximum_concurrency = 2
   # }
 }
+
+

@@ -30,6 +30,13 @@ module "iam" {
   source = "./modules/iam"
 }
 
+module "ssm" {
+  source          = "./modules/ssm"
+  workload        = var.workload
+  lambda_username = var.lambda_username
+  lambda_password = var.lambda_password
+}
+
 module "apprunner" {
   count             = var.enable_app_runner ? 1 : 0
   source            = "./modules/apprunner"
@@ -42,6 +49,9 @@ module "apprunner" {
   image_tag         = var.ecr_image_tag
   instance_role_arn = module.iam.instance_role_arn
   access_role_arn   = module.iam.access_role_arn
+
+  ssm_lambda_username_secret_arn = module.ssm.lambda_username_secret_arn
+  ssm_lambda_password_secret_arn = module.ssm.lambda_password_secret_arn
 
   depends_on = [module.iam]
 }

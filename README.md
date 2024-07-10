@@ -1,4 +1,5 @@
 # aws-apprunner-lambda-sqs
+
 Using Lambda and SQS with App Runner for background processing
 
 ## Local development
@@ -10,5 +11,23 @@ Using Lambda and SQS with App Runner for background processing
 ./mvnw spring-boot:run
 ```
 
-##
+## Authentication
 
+The application will use default Spring Security auto-configuration with the following credentials:
+
+| Component | Username | Password |
+|-----------|----------|----------|
+| Client     | `client`  | `p4ssw0rd`  |
+| SQS Lambda | `lambda`  | `p4ssw0rd`  |
+
+
+## Limitations
+
+Timeouts
+Message size
+Authentication
+Reprocessing / Dead letter queues
+
+
+
+https://docs.aws.amazon.com/systems-manager/latest/userguide/ps-integration-lambda-extensions.html

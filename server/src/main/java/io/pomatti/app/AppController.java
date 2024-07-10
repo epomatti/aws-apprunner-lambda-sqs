@@ -32,4 +32,10 @@ public class AppController {
 		return ResponseEntity.ok().build();
 	}
 
+	@PostMapping("/api/process")
+	public ResponseEntity<?> process(@RequestBody com.fasterxml.jackson.databind.JsonNode payload) {
+		System.out.println("Received message for processing...");
+		return ResponseEntity.ok().build();
+	}
+
 }
