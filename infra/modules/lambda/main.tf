@@ -22,7 +22,7 @@ resource "aws_lambda_function" "sqs" {
 
   environment {
     variables = {
-      SQS_QUEUE_NAME = var.sqs_queue_name
+      APPRUNNER_SERVICE_URL = var.apprunner_service_url
     }
   }
 

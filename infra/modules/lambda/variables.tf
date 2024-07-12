@@ -6,10 +6,6 @@ variable "execution_role_arn" {
   type = string
 }
 
-variable "sqs_queue_name" {
-  type = string
-}
-
 variable "sqs_queue_arn" {
   type = string
 }
@@ -24,6 +20,10 @@ variable "timeout" {
 
 variable "sqs_trigger_enabled" {
   type = bool
+}
+
+variable "apprunner_service_url" {
+  type = string
 }
 
 # variable "sqs_trigger_batch_size" {
