@@ -26,6 +26,14 @@ variable "apprunner_service_url" {
   type = string
 }
 
+variable "ssm_lambda_username_parameter_name" {
+  type = string
+}
+
+variable "ssm_lambda_password_parameter_name" {
+  type = string
+}
+
 # variable "sqs_trigger_batch_size" {
 #   type = number
 # }

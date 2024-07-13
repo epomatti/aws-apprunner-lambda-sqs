@@ -26,15 +26,15 @@ module "sqs" {
   workload = var.workload
 }
 
-module "iam" {
-  source = "./modules/iam"
-}
-
 module "ssm" {
   source          = "./modules/ssm"
   workload        = var.workload
   lambda_username = var.lambda_username
   lambda_password = var.lambda_password
+}
+
+module "iam_apprunner" {
+  source = "./modules/iam/apprunner"
 }
 
 module "apprunner" {
@@ -47,13 +47,13 @@ module "apprunner" {
   memory            = var.app_runner_memory
   repository_url    = module.ecr.repository_url
   image_tag         = var.ecr_image_tag
-  instance_role_arn = module.iam.instance_role_arn
-  access_role_arn   = module.iam.access_role_arn
+  instance_role_arn = module.iam_apprunner.instance_role_arn
+  access_role_arn   = module.iam_apprunner.access_role_arn
 
   ssm_lambda_username_secret_arn = module.ssm.lambda_username_secret_arn
   ssm_lambda_password_secret_arn = module.ssm.lambda_password_secret_arn
 
-  depends_on = [module.iam]
+  depends_on = [module.iam_apprunner]
 }
 
 module "iam_lambda" {
@@ -62,6 +62,7 @@ module "iam_lambda" {
 }
 
 module "lambda" {
+  count                 = var.enable_app_runner ? 1 : 0
   source                = "./modules/lambda"
   name                  = var.workload
   execution_role_arn    = module.iam_lambda.execution_role_arn
@@ -69,7 +70,10 @@ module "lambda" {
   memory_size           = var.lambda_memory_size
   timeout               = var.lambda_timeout
   sqs_trigger_enabled   = var.lambda_sqs_trigger_enabled
-  apprunner_service_url = var.enable_app_runner ? module.apprunner.service_url : ""
+  apprunner_service_url = module.apprunner[0].service_url
 
-  depends_on = [module.iam_lambda]
+  ssm_lambda_username_parameter_name = module.ssm.lambda_username_parameter_name
+  ssm_lambda_password_parameter_name = module.ssm.lambda_password_parameter_name
+
+  depends_on = [module.iam_lambda, module.apprunner]
 }

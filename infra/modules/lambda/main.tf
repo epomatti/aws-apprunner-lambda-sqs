@@ -22,12 +22,14 @@ resource "aws_lambda_function" "sqs" {
 
   environment {
     variables = {
-      APPRUNNER_SERVICE_URL = var.apprunner_service_url
+      APPRUNNER_SERVICE_URL       = var.apprunner_service_url
+      SSM_USERNAME_PARAMETER_NAME = var.ssm_lambda_username_parameter_name
+      SSM_PASSWORD_PARAMETER_NAME = var.ssm_lambda_password_parameter_name
     }
   }
 
   # https://docs.aws.amazon.com/systems-manager/latest/userguide/ps-integration-lambda-extensions.html#ps-integration-lambda-extensions-add
-  layers = ["arn:aws:lambda:us-east-2:590474943231:layer:AWS-Parameters-and-Secrets-Lambda-Extension:11"]
+  # layers = ["arn:aws:lambda:us-east-2:590474943231:layer:AWS-Parameters-and-Secrets-Lambda-Extension:11"]
 
   lifecycle {
     ignore_changes = [
@@ -50,5 +52,3 @@ resource "aws_lambda_event_source_mapping" "sqs" {
   #   maximum_concurrency = 2
   # }
 }
-
-
