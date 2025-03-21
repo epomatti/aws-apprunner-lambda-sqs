@@ -17,13 +17,18 @@ terraform -chdir="infra" init
 terraform -chdir="infra" apply -auto-approve
 ```
 
-Build the application:
+Build and push the API application to ECR:
 
 ```sh
+cd api
 bash ecrBuildPush.sh
 ```
 
-Set the 
+Flag the App Runner for deployment and re-apply the infrastructure:
+
+```terraform
+enable_app_runner = true
+```
 
 ## Local Development
 

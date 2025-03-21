@@ -3,7 +3,7 @@
 account=$(aws sts get-caller-identity --query "Account" --output text)
 region="us-east-2"
 tag="latest"
-name="easybank"
+name="litware"
 repositoryUrl=$account.dkr.ecr.$region.amazonaws.com
 repositoryImage=$repositoryUrl/$name:$tag
 
