@@ -17,10 +17,6 @@ variable "enable_app_runner" {
   type = bool
 }
 
-variable "app_runner_workload" {
-  type = string
-}
-
 variable "app_runner_cpu" {
   type = string
 }
