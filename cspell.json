@@ -4,11 +4,16 @@
     "dictionaryDefinitions": [],
     "dictionaries": [],
     "words": [
+        "apprunner",
         "databind",
+        "Dhttps",
         "easybank",
         "fasterxml",
+        "hashicorp",
         "jackson",
-        "mvnw"
+        "litware",
+        "mvnw",
+        "temurin"
     ],
     "ignoreWords": [],
     "import": []

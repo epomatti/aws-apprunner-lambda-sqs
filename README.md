@@ -2,7 +2,30 @@
 
 Using Lambda and SQS with App Runner for background processing
 
-## Local development
+## Infrastructure Deployment
+
+Copy the variables template files:
+
+```sh
+cp infra/config/local.auto.tfvars infra/.auto.tfvars
+```
+
+Create the infrastructure:
+
+```sh
+terraform -chdir="infra" init
+terraform -chdir="infra" apply -auto-approve
+```
+
+Build the application:
+
+```sh
+bash ecrBuildPush.sh
+```
+
+Set the 
+
+## Local Development
 
 > [!TIP]
 > Keep the AWS SAM CLI updated.
