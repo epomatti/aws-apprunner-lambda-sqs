@@ -5,6 +5,7 @@
     "dictionaries": [],
     "words": [
         "apprunner",
+        "awssdk",
         "databind",
         "Dhttps",
         "easybank",
@@ -13,6 +14,7 @@
         "jackson",
         "litware",
         "mvnw",
+        "springframework",
         "temurin"
     ],
     "ignoreWords": [],
