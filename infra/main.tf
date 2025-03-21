@@ -22,8 +22,13 @@ module "ecr" {
   workload = var.workload
 }
 
-module "sqs" {
-  source   = "./modules/sqs"
+module "sqs_cloud" {
+  source   = "./modules/sqs/cloud"
+  workload = var.workload
+}
+
+module "sqs_local" {
+  source   = "./modules/sqs/local"
   workload = var.workload
 }
 
@@ -71,7 +76,7 @@ module "lambda" {
   lambda_architectures  = var.lambda_architectures
   lambda_runtime        = var.lambda_runtime
   lambda_handler        = var.lambda_handler
-  sqs_queue_arn         = module.sqs.payments_queue_arn
+  sqs_queue_arn         = module.sqs_cloud.payments_queue_arn
   memory_size           = var.lambda_memory_size
   timeout               = var.lambda_timeout
   sqs_trigger_enabled   = var.lambda_sqs_trigger_enabled

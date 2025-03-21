@@ -33,11 +33,12 @@ enable_app_runner = true
 ## Local Development
 
 > [!TIP]
-> Keep the AWS SAM CLI updated.
+> Keep the AWS SAM CLI [updated](https://docs.aws.amazon.com/serverless-application-model/latest/developerguide/manage-sam-cli-versions.html).
 
 ```sh
 ./mvnw spring-boot:run
 ```
+
 
 ## Authentication
 

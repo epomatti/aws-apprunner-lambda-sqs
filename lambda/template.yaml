@@ -1,0 +1,36 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: >
+  lambda
+
+  Sample SAM Template for lambda
+
+Parameters:
+  SQSQueueARN:
+    Type: String
+    Description: SQS Queue ARN for the events
+
+Globals:
+  Function:
+    Timeout: 20
+    MemorySize: 512
+
+Resources:
+  SQSFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: SQSFunction
+      Handler: io.pomatti.Function::handleRequest
+      Runtime: java21
+      Architectures:
+        - x86_64
+      MemorySize: 512
+      # Environment: # More info about Env Vars: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#environment-object
+      #   Variables:
+      #     PARAM1: VALUE
+      Events:
+        SQSEvent:
+          Type: SQS
+          Properties:
+            Queue: !Ref SQSQueueARN
+            BatchSize: 10
