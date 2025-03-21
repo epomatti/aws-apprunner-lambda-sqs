@@ -22,6 +22,11 @@ resource "aws_iam_role_policy_attachment" "tasks_sqs_full_access" {
   policy_arn = "arn:aws:iam::aws:policy/AmazonSQSFullAccess"
 }
 
+resource "aws_iam_role_policy_attachment" "instance_2" {
+  role       = aws_iam_role.instance_role.name
+  policy_arn = aws_iam_policy.default.arn
+}
+
 ### Access Role ###
 resource "aws_iam_role" "access_role" {
   name = "AppRunnerAccessRole"
@@ -62,6 +67,7 @@ resource "aws_iam_policy" "default" {
         Effect = "Allow"
         Action = [
           "ssm:GetParameter",
+          "ssm:GetParameters",
           "kms:Decrypt"
         ]
         Resource = [

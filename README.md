@@ -50,10 +50,37 @@ The application will use default Spring Security auto-configuration with the fol
 
 ## Lambda
 
+https://docs.aws.amazon.com/lambda/latest/dg/lambda-runtimes.html
+
 ```sh
 zip lambda.zip app.py
 ```
 
+
+java21
+
+| Language  | Runtime | Password |
+|-----------|----------|----------|
+| Java   | `java21`  | `p4ssw0rd`  |
+| Python | `lambda`  | `p4ssw0rd`  |
+
+### Runtimes
+
+#### Java
+
+```terraform
+lambda_handler_zip = "java/lambda-java.zip"
+lambda_runtime     = "java21"
+lambda_handler     = "LambdaFunction.handleRequest"
+```
+
+#### Python
+
+```terraform
+lambda_handler_zip = "python/lambda-python.zip"
+lambda_runtime     = "python3.13"
+lambda_handler     = "app.lambda_handler"
+```
 
 ## Limitations
 
