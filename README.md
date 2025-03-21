@@ -43,6 +43,12 @@ The application will use default Spring Security auto-configuration with the fol
 | Client     | `client`  | `p4ssw0rd`  |
 | SQS Lambda | `lambda`  | `p4ssw0rd`  |
 
+## Lambda
+
+```sh
+zip lambda.zip app.py
+```
+
 
 ## Limitations
 

@@ -66,6 +66,10 @@ module "lambda" {
   source                = "./modules/lambda"
   name                  = var.workload
   execution_role_arn    = module.iam_lambda.execution_role_arn
+  lambda_handler_zip    = var.lambda_handler_zip
+  lambda_architectures  = var.lambda_architectures
+  lambda_runtime        = var.lambda_runtime
+  lambda_handler        = var.lambda_handler
   sqs_queue_arn         = module.sqs.payments_queue_arn
   memory_size           = var.lambda_memory_size
   timeout               = var.lambda_timeout

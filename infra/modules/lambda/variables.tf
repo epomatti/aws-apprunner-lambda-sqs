@@ -10,6 +10,22 @@ variable "sqs_queue_arn" {
   type = string
 }
 
+variable "lambda_handler_zip" {
+  type = string
+}
+
+variable "lambda_handler" {
+  type = string
+}
+
+variable "lambda_architectures" {
+  type = list(string)
+}
+
+variable "lambda_runtime" {
+  type = string
+}
+
 variable "memory_size" {
   type = number
 }

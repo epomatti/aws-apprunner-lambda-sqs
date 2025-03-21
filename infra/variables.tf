@@ -26,6 +26,10 @@ variable "app_runner_memory" {
 }
 
 ### Lambda ###
+variable "lambda_handler_zip" {
+  type = string
+}
+
 variable "lambda_memory_size" {
   type = number
 }
@@ -46,4 +50,16 @@ variable "lambda_username" {
 variable "lambda_password" {
   type      = string
   sensitive = true
+}
+
+variable "lambda_architectures" {
+  type = list(string)
+}
+
+variable "lambda_runtime" {
+  type = string
+}
+
+variable "lambda_handler" {
+  type = string
 }

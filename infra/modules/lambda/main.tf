@@ -1,6 +1,5 @@
 locals {
-  # Zipped with `zip lambda.zip app.py`
-  filename = "${path.module}/handler/lambda.zip"
+  filename = "${path.module}/handlers/${var.lambda_handler_zip}"
 }
 
 # TODO: X-Ray
@@ -13,9 +12,9 @@ resource "aws_lambda_function" "sqs" {
   role             = var.execution_role_arn
   filename         = local.filename
   source_code_hash = filebase64sha256(local.filename)
-  architectures    = ["x86_64"]
-  runtime          = "python3.12"
-  handler          = "app.lambda_handler"
+  architectures    = var.lambda_architectures
+  runtime          = var.lambda_runtime
+  handler          = var.lambda_handler
 
   memory_size = var.memory_size
   timeout     = var.timeout
