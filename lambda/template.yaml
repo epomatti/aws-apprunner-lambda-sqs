@@ -20,7 +20,7 @@ Resources:
     Type: AWS::Serverless::Function
     Properties:
       CodeUri: SQSFunction
-      Handler: io.pomatti.Function::handleRequest
+      Handler: io.pomatti.lambda.Function::handleRequest
       Runtime: java21
       Architectures:
         - x86_64

@@ -1,5 +1,5 @@
 output "apprunner_service_url" {
-  value = var.enable_app_runner ? module.apprunner[0].service_url : null
+  value = var.enable_app_runner ? "https://${module.apprunner[0].service_url}" : null
 }
 
 output "sqs_queue_local" {

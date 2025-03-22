@@ -1,4 +1,4 @@
-# aws-apprunner-lambda-sqs
+# AWS AppRunner SQS Trigger with Lambda
 
 Using Lambda and SQS with App Runner for background processing
 
@@ -59,29 +59,39 @@ The application will use default Spring Security auto-configuration with the fol
 
 https://docs.aws.amazon.com/lambda/latest/dg/lambda-runtimes.html
 
-```sh
-zip lambda.zip app.py
-```
-
-
-java21
 
 | Language  | Runtime | Password |
 |-----------|----------|----------|
 | Java   | `java21`  | `p4ssw0rd`  |
-| Python | `lambda`  | `p4ssw0rd`  |
+| Python | `python3.13`  | `p4ssw0rd`  |
 
 ### Runtimes
 
 #### Java
 
+To recreate the ZIP file:
+
+```sh
+zip -r lambda-java.zip io
+```
+
+Terraform parameters:
+
 ```terraform
 lambda_handler_zip = "java/lambda-java.zip"
 lambda_runtime     = "java21"
-lambda_handler     = "LambdaFunction.handleRequest"
+lambda_handler     = "io.pomatti.lambda.Function::handleRequest"
 ```
 
 #### Python
+
+To recreate the ZIP file:
+
+```sh
+zip lambda-python.zip app.py
+```
+
+Terraform parameters:
 
 ```terraform
 lambda_handler_zip = "python/lambda-python.zip"

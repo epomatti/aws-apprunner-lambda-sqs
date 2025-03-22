@@ -21,8 +21,10 @@ public class DefaultSecurityConfig {
 
   @Bean
   public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+    // /actuator/health
     http
         .authorizeHttpRequests((requests) -> requests
+            .requestMatchers("/actuator/health").permitAll()
             .anyRequest().authenticated())
         .httpBasic(withDefaults())
         .logout((logout) -> logout.permitAll());

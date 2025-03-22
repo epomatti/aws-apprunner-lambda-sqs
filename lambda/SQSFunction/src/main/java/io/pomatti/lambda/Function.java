@@ -1,4 +1,4 @@
-package io.pomatti;
+package io.pomatti.lambda;
 
 import com.amazonaws.services.lambda.runtime.Context;
 import com.amazonaws.services.lambda.runtime.RequestHandler;
@@ -52,15 +52,16 @@ public class Function implements RequestHandler<SQSEvent, Void> {
           }
         }).build();
 
+    // App Runner doesn't support HTTP 2
+    var version = HttpClient.Version.HTTP_1_1;
+
+    var uriString = String.format("%s/api/process", url);
+
     HttpRequest request = HttpRequest.newBuilder()
-        .uri(new URI(url + "/api/process"))
-        .version(HttpClient.Version.HTTP_2)
-        // .header("key1", "value1")
-        // .header("key2", "value2")
-        .POST(HttpRequest.BodyPublishers.noBody())
-        // .POST(HttpRequest.BodyPublishers.ofString("Sample request body"))
-        // .POST(HttpRequest.BodyPublishers
-        // .ofInputStream(() -> new ByteArrayInputStream(sampleData)))
+        .uri(new URI(uriString))
+        .version(version)
+        .header("Content-type", "application/json")
+        .POST(HttpRequest.BodyPublishers.ofString(msg.getBody()))
         .build();
 
     HttpResponse<String> response = client.send(request, BodyHandlers.ofString());
