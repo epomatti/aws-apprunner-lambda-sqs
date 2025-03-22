@@ -39,6 +39,12 @@ module "ssm" {
   lambda_password = var.lambda_password
 }
 
+module "secrets" {
+  source          = "./modules/secrets"
+  workload        = var.workload
+  lambda_password = var.lambda_password
+}
+
 module "iam_apprunner" {
   source = "./modules/iam/apprunner"
 }

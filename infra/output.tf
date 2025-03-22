@@ -9,3 +9,11 @@ output "sqs_queue_local" {
 output "sqs_queue_deadletter" {
   value = module.sqs_local.payments_deadletter_queue_arn
 }
+
+output "local_lambda_secret_arn" {
+  value = module.secrets.local_lambda_secret_arn
+}
+
+output "local_lambda_secret_name" {
+  value = module.secrets.local_lambda_secret_name
+}

@@ -1,14 +1,14 @@
-AWSTemplateFormatVersion: '2010-09-09'
+AWSTemplateFormatVersion: "2010-09-09"
 Transform: AWS::Serverless-2016-10-31
 Description: >
   lambda
 
   Sample SAM Template for lambda
 
-Parameters:
-  SQSQueueARN:
-    Type: String
-    Description: SQS Queue ARN for the events
+# Parameters:
+#   SQSQueueARN:
+#     Type: String
+#     Description: SQS Queue ARN for the events
 
 Globals:
   Function:
@@ -25,9 +25,11 @@ Resources:
       Architectures:
         - x86_64
       MemorySize: 512
-      # Environment: # More info about Env Vars: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#environment-object
-      #   Variables:
-      #     PARAM1: VALUE
+      Environment:
+        Variables:
+          APP_RUNNER_URL: ""
+          APP_RUNNER_USERNAME: ""
+          APP_RUNNER_SECRET_MANAGER_PASSWORD: ""
       Events:
         SQSEvent:
           Type: SQS

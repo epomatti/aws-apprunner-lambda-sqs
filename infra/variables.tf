@@ -43,8 +43,7 @@ variable "lambda_sqs_trigger_enabled" {
 }
 
 variable "lambda_username" {
-  type      = string
-  sensitive = true
+  type = string
 }
 
 variable "lambda_password" {

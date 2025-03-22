@@ -36,3 +36,12 @@ sam local invoke "SQSFunction" --env-vars env.json --event events/event.json
 https://docs.aws.amazon.com/serverless-application-model/latest/developerguide/sam-property-function-sqs.html
 
 https://docs.aws.amazon.com/lambda/latest/dg/with-sqs-example.html
+
+https://docs.aws.amazon.com/serverless-application-model/latest/developerguide/serverless-sam-cli-using-invoke.html#serverless-sam-cli-using-invoke-environment-file
+
+https://docs.powertools.aws.dev/lambda/java/
+
+https://docs.freefair.io/gradle-plugins/8.13/reference/
+
+https://docs.powertools.aws.dev/lambda/java/#install
+
