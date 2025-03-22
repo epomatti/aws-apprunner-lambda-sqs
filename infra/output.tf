@@ -17,3 +17,7 @@ output "local_lambda_secret_arn" {
 output "local_lambda_secret_name" {
   value = module.secrets.local_lambda_secret_name
 }
+
+output "bucket_lambda" {
+  value = module.bucket_lambda.bucket_lambda
+}

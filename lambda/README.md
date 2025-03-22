@@ -33,6 +33,29 @@ Invoke it:
 sam local invoke "SQSFunction" --env-vars env.json --event events/event-empty.json
 ```
 
+## Package
+
+```sh
+aws lambda update-function-code --function-name litware \
+  --zip-file fileb://myFunction.zip
+```
+
+```sh
+sam package --region us-east-2 --s3-bucket "bucket-litware-lambda-deploy-local" --no-resolve-s3 --force-upload
+```
+
+```sh
+aws lambda update-function-code --function-name litware \
+--s3-bucket "bucket-litware-lambda-deploy-local" --s3-key myFileName.zip
+```
+
+`resolve_s3` has been set to false
+
+```
+[default.package.parameters]
+resolve_s3 = false
+```
+
 ## Configuration
 
 https://docs.aws.amazon.com/serverless-application-model/latest/developerguide/sam-property-function-sqs.html
@@ -48,3 +71,7 @@ https://docs.freefair.io/gradle-plugins/8.13/reference/
 https://docs.powertools.aws.dev/lambda/java/#install
 
 https://github.com/aws/aws-lambda-java-libs/blob/main/aws-lambda-java-log4j2/README.md
+
+https://docs.aws.amazon.com/serverless-application-model/latest/developerguide/sam-cli-command-reference-sam-package.html
+
+https://docs.aws.amazon.com/lambda/latest/dg/java-package.html

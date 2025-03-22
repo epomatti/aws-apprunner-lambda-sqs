@@ -93,3 +93,8 @@ module "lambda" {
 
   depends_on = [module.iam_lambda, module.apprunner]
 }
+
+module "bucket_lambda" {
+  source   = "./modules/s3"
+  workload = var.workload
+}
