@@ -22,7 +22,7 @@ import software.amazon.lambda.powertools.logging.Logging;
 public class Function implements RequestHandler<SQSEvent, Void> {
 
   Logger log = LogManager.getLogger(Function.class);
-  // software.amazon.lambda.powertools.core.internal.UserAgentConfigurator v;
+
   @Logging
   @Override
   public Void handleRequest(SQSEvent sqsEvent, Context context) {

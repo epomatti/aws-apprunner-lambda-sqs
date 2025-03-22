@@ -26,6 +26,9 @@ Invoke it:
 > [!TIP]
 > Make sure Docker is running locally
 
+> [!NOTE]
+> You must be logged in to AWS in your console to authorize Secrets Manager calls
+
 ```sh
 sam local invoke "SQSFunction" --env-vars env.json --event events/event.json
 ```
