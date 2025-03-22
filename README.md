@@ -39,6 +39,12 @@ enable_app_runner = true
 ./mvnw spring-boot:run
 ```
 
+Test the API:
+
+```sh
+curl -I -u lambda:p4ssw0rd localhost:8080
+```
+
 
 ## Authentication
 
