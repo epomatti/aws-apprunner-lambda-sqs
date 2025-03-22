@@ -1,19 +1,10 @@
 AWSTemplateFormatVersion: "2010-09-09"
 Transform: AWS::Serverless-2016-10-31
-Description: >
-  lambda
-
-  Sample SAM Template for lambda
-
-# Parameters:
-#   SQSQueueARN:
-#     Type: String
-#     Description: SQS Queue ARN for the events
+Description: "App Runner SQS integration with Lambda"
 
 Globals:
   Function:
-    Timeout: 20
-    MemorySize: 512
+    Timeout: 120
 
 Resources:
   SQSFunction:
@@ -24,15 +15,9 @@ Resources:
       Runtime: java21
       Architectures:
         - x86_64
-      MemorySize: 512
+      MemorySize: 1024
       Environment:
         Variables:
           APP_RUNNER_URL: ""
           APP_RUNNER_USERNAME: ""
           APP_RUNNER_SECRET_MANAGER_PASSWORD: ""
-      Events:
-        SQSEvent:
-          Type: SQS
-          Properties:
-            Queue: !Ref SQSQueueARN
-            BatchSize: 1
