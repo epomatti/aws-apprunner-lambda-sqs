@@ -27,7 +27,6 @@ Invoke it:
 > Make sure Docker is running locally
 
 ```sh
-sam local invoke "SQSFunction" --env-vars env.json
 sam local invoke "SQSFunction" --env-vars env.json --event events/event.json
 ```
 
@@ -45,3 +44,4 @@ https://docs.freefair.io/gradle-plugins/8.13/reference/
 
 https://docs.powertools.aws.dev/lambda/java/#install
 
+https://github.com/aws/aws-lambda-java-libs/blob/main/aws-lambda-java-log4j2/README.md

@@ -4,10 +4,13 @@
     "dictionaryDefinitions": [],
     "dictionaries": [],
     "words": [
+        "Appender",
+        "Appenders",
         "apprunner",
         "aspectj",
         "aspectjrt",
         "awssdk",
+        "classpath",
         "databind",
         "deadletter",
         "Dhttps",

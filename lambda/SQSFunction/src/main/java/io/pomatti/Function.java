@@ -7,36 +7,71 @@ import com.amazonaws.services.lambda.runtime.events.SQSEvent.SQSMessage;
 import software.amazon.lambda.powertools.parameters.SecretsProvider;
 import software.amazon.lambda.powertools.parameters.ParamManager;
 
+import java.net.Authenticator;
+import java.net.PasswordAuthentication;
+import java.net.URI;
+import java.net.http.HttpClient;
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
+import java.net.http.HttpResponse.BodyHandlers;
+
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import software.amazon.lambda.powertools.logging.Logging;
+
 public class Function implements RequestHandler<SQSEvent, Void> {
 
+  Logger log = LogManager.getLogger(Function.class);
+  // software.amazon.lambda.powertools.core.internal.UserAgentConfigurator v;
+  @Logging
   @Override
   public Void handleRequest(SQSEvent sqsEvent, Context context) {
-    var secret = getSecret(context);
-    context.getLogger().log(secret);
     for (SQSMessage msg : sqsEvent.getRecords()) {
-      processMessage(msg, context);
+      try {
+        processMessage(msg);
+      } catch (Exception e) {
+        log.error("An error occurred.", e);
+      }
     }
-    context.getLogger().log("done");
     return null;
   }
 
-  private void processMessage(SQSMessage msg, Context context) {
-    try {
-      context.getLogger().log("Processed message " + msg.getBody());
+  private void processMessage(SQSMessage msg) throws Exception {
 
-      // TODO: Do interesting work based on the new message f
+    var url = System.getenv("APP_RUNNER_URL");
+    var username = System.getenv("APP_RUNNER_USERNAME");
+    var password = getSecret();
 
-    } catch (Exception e) {
-      context.getLogger().log("An error occurred");
-      throw e;
+    HttpClient client = HttpClient.newBuilder()
+        .authenticator(new Authenticator() {
+          @Override
+          protected PasswordAuthentication getPasswordAuthentication() {
+            return new PasswordAuthentication(
+                username,
+                password.toCharArray());
+          }
+        }).build();
+
+    HttpRequest request = HttpRequest.newBuilder()
+        .uri(new URI(url + "/api/process"))
+        .version(HttpClient.Version.HTTP_2)
+        // .header("key1", "value1")
+        // .header("key2", "value2")
+        .POST(HttpRequest.BodyPublishers.noBody())
+        // .POST(HttpRequest.BodyPublishers.ofString("Sample request body"))
+        // .POST(HttpRequest.BodyPublishers
+        // .ofInputStream(() -> new ByteArrayInputStream(sampleData)))
+        .build();
+
+    HttpResponse<String> response = client.send(request, BodyHandlers.ofString());
+    if (response.statusCode() != 200) {
+      throw new Exception(response.body());
     }
-
   }
 
-  protected String getSecret(Context context) {
+  protected String getSecret() {
     SecretsProvider secretsProvider = ParamManager.getSecretsProvider();
     var key = System.getenv("APP_RUNNER_SECRET_MANAGER_PASSWORD");
-    context.getLogger().log("Secrets manager key: " + key);
     return secretsProvider.get(key);
   }
 }
