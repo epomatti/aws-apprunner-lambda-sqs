@@ -20,7 +20,7 @@ public class Function implements RequestHandler<SQSEvent, Void> {
         try {
             context.getLogger().log("Processed message " + msg.getBody());
 
-            // TODO: Do interesting work based on the new message
+            // TODO: Do interesting work based on the new message f
 
         } catch (Exception e) {
             context.getLogger().log("An error occurred");

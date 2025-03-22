@@ -6,6 +6,7 @@ Install the compatible Java version, currently Java 21:
 
 ```sh
 sdk install java 21-tem
+sdk install gradle
 ```
 
 Copy the parameters file template, and set the values accordingly:
