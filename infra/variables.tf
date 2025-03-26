@@ -25,6 +25,11 @@ variable "app_runner_memory" {
   type = string
 }
 
+### NAT Gateway ###
+variable "create_nat_gateway" {
+  type = bool
+}
+
 ### Lambda ###
 variable "lambda_handler_zip" {
   type = string

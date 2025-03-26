@@ -12,9 +12,10 @@ provider "aws" {
 }
 
 module "vpc" {
-  source     = "./modules/vpc"
-  aws_region = var.aws_region
-  workload   = var.workload
+  source             = "./modules/vpc"
+  aws_region         = var.aws_region
+  workload           = var.workload
+  create_nat_gateway = var.create_nat_gateway
 }
 
 module "ecr" {

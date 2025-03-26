@@ -5,3 +5,7 @@ variable "aws_region" {
 variable "workload" {
   type = string
 }
+
+variable "create_nat_gateway" {
+  type = bool
+}

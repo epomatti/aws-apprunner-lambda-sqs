@@ -10,6 +10,9 @@ enable_app_runner = false
 app_runner_cpu    = "2 vCPU"
 app_runner_memory = "4 GB"
 
+### NAT Gateway ###
+create_nat_gateway = false
+
 ### Lambda ###
 lambda_memory_size         = 1024
 lambda_timeout             = 119

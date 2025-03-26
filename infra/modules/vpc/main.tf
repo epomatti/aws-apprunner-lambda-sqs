@@ -77,11 +77,13 @@ resource "aws_route_table_association" "private1" {
 
 ### NAT Gateway ###
 resource "aws_eip" "nat" {
+  count  = var.create_nat_gateway ? 1 : 0
   domain = "vpc"
 }
 
 resource "aws_nat_gateway" "main" {
-  allocation_id = aws_eip.nat.id
+  count         = var.create_nat_gateway ? 1 : 0
+  allocation_id = aws_eip.nat[0].id
   subnet_id     = aws_subnet.public1.id
 
   tags = {
@@ -97,9 +99,10 @@ resource "aws_route" "public_subnet1_to_gateway" {
 }
 
 resource "aws_route" "private_subnet1_to_nat_gateway" {
+  count                  = var.create_nat_gateway ? 1 : 0
   route_table_id         = aws_route_table.private1.id
   destination_cidr_block = "0.0.0.0/0"
-  nat_gateway_id         = aws_nat_gateway.main.id
+  nat_gateway_id         = aws_nat_gateway.main[0].id
 }
 
 ### REMOVE DEFAULT ###
