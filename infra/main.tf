@@ -69,6 +69,14 @@ module "apprunner" {
   depends_on = [module.iam_apprunner]
 }
 
+module "dynamodb" {
+  source               = "./modules/dynamodb"
+  workload             = var.workload
+  vpc_id               = module.vpc.vpc_id
+  private_route_tables = []
+  aws_region           = var.aws_region
+}
+
 module "iam_lambda" {
   source   = "./modules/iam/lambda"
   workload = var.workload
