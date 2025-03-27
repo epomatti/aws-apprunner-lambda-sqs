@@ -22,7 +22,7 @@ resource "aws_lambda_function" "sqs" {
   environment {
     variables = {
       APP_RUNNER_SECRET_MANAGER_PASSWORD = var.lambda_secret_name
-      APP_RUNNER_URL                     = var.apprunner_service_url
+      APP_RUNNER_URL                     = "https://${var.apprunner_service_url}"
       APP_RUNNER_USERNAME                = var.apprunner_username
     }
   }
