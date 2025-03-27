@@ -38,7 +38,6 @@ variable "ssm_lambda_username_secret_arn" {
   type = string
 }
 
-
 variable "ssm_lambda_password_secret_arn" {
   type = string
 }

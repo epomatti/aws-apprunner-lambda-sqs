@@ -21,9 +21,9 @@ resource "aws_lambda_function" "sqs" {
 
   environment {
     variables = {
-      APPRUNNER_SERVICE_URL       = var.apprunner_service_url
-      SSM_USERNAME_PARAMETER_NAME = var.ssm_lambda_username_parameter_name
-      SSM_PASSWORD_PARAMETER_NAME = var.ssm_lambda_password_parameter_name
+      APP_RUNNER_SECRET_MANAGER_PASSWORD = var.lambda_secret_name
+      APP_RUNNER_URL                     = var.apprunner_service_url
+      APP_RUNNER_USERNAME                = var.apprunner_username
     }
   }
 
@@ -42,7 +42,7 @@ resource "aws_lambda_event_source_mapping" "sqs" {
   function_name                      = aws_lambda_function.sqs.arn
   event_source_arn                   = var.sqs_queue_arn
   enabled                            = var.sqs_trigger_enabled
-  batch_size                         = 10
+  batch_size                         = var.lambda_sqs_batch_size
   maximum_batching_window_in_seconds = 0
 
   # function_response_types = "ReportBatchItemFailures"

@@ -33,13 +33,6 @@ module "sqs_local" {
   workload = var.workload
 }
 
-module "ssm" {
-  source          = "./modules/ssm"
-  workload        = var.workload
-  lambda_username = var.lambda_username
-  lambda_password = var.lambda_password
-}
-
 module "secrets" {
   source          = "./modules/secrets"
   workload        = var.workload
@@ -48,6 +41,13 @@ module "secrets" {
 
 module "iam_apprunner" {
   source = "./modules/iam/apprunner"
+}
+
+module "ssm" {
+  source          = "./modules/ssm"
+  workload        = var.workload
+  lambda_username = var.lambda_username
+  lambda_password = var.lambda_password
 }
 
 module "apprunner" {
@@ -88,9 +88,9 @@ module "lambda" {
   timeout               = var.lambda_timeout
   sqs_trigger_enabled   = var.lambda_sqs_trigger_enabled
   apprunner_service_url = module.apprunner[0].service_url
-
-  ssm_lambda_username_parameter_name = module.ssm.lambda_username_parameter_name
-  ssm_lambda_password_parameter_name = module.ssm.lambda_password_parameter_name
+  apprunner_username    = var.lambda_username
+  lambda_secret_name    = module.secrets.lambda_secret_name
+  lambda_sqs_batch_size = var.lambda_sqs_batch_size
 
   depends_on = [module.iam_lambda, module.apprunner]
 }

@@ -24,8 +24,10 @@
         "jackson",
         "jupiter",
         "litware",
+        "lombok",
         "mvnw",
         "powertools",
+        "projectlombok",
         "redrive",
         "springframework",
         "temurin"

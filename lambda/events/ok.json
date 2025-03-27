@@ -1,0 +1,8 @@
+{
+  "Records": [
+    {
+      "messageId": "OK001",
+      "body": "{ \"httpResponseStatus\": 200 }"
+    }
+  ]
+}

@@ -2,6 +2,7 @@ package io.pomatti.lambda;
 
 import com.amazonaws.services.lambda.runtime.Context;
 import com.amazonaws.services.lambda.runtime.RequestHandler;
+import com.amazonaws.services.lambda.runtime.events.SQSBatchResponse;
 import com.amazonaws.services.lambda.runtime.events.SQSEvent;
 import com.amazonaws.services.lambda.runtime.events.SQSEvent.SQSMessage;
 import software.amazon.lambda.powertools.parameters.SecretsProvider;
@@ -14,26 +15,31 @@ import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.net.http.HttpResponse.BodyHandlers;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import software.amazon.lambda.powertools.logging.Logging;
 
-public class Function implements RequestHandler<SQSEvent, Void> {
+public class Function implements RequestHandler<SQSEvent, SQSBatchResponse> {
 
   Logger log = LogManager.getLogger(Function.class);
 
   @Logging
   @Override
-  public Void handleRequest(SQSEvent sqsEvent, Context context) {
+  public SQSBatchResponse handleRequest(SQSEvent sqsEvent, Context context) {
+
+    List<SQSBatchResponse.BatchItemFailure> batchItemFailures = new ArrayList<SQSBatchResponse.BatchItemFailure>();
     for (SQSMessage msg : sqsEvent.getRecords()) {
       try {
         processMessage(msg);
       } catch (Exception e) {
-        log.error("An error occurred.", e);
+        log.error(String.format("An error occurred while processing message [%s]. Adding the message for reprocessing.", msg.getMessageId()), e);
+        batchItemFailures.add(new SQSBatchResponse.BatchItemFailure(msg.getMessageId()));
       }
     }
-    return null;
+    return new SQSBatchResponse(batchItemFailures);
   }
 
   private void processMessage(SQSMessage msg) throws Exception {
@@ -66,7 +72,7 @@ public class Function implements RequestHandler<SQSEvent, Void> {
 
     HttpResponse<String> response = client.send(request, BodyHandlers.ofString());
     if (response.statusCode() != 200) {
-      throw new Exception(response.body());
+      throw new Exception(String.format("Received error status %s from the API", response.statusCode()));
     }
   }
 
@@ -75,4 +81,5 @@ public class Function implements RequestHandler<SQSEvent, Void> {
     var key = System.getenv("APP_RUNNER_SECRET_MANAGER_PASSWORD");
     return secretsProvider.get(key);
   }
+
 }

@@ -1,0 +1,8 @@
+{
+  "Records": [
+    {
+      "messageId": "ERR001",
+      "body": "{ \"httpResponseStatus\": 500 }"
+    }
+  ]
+}

@@ -67,3 +67,7 @@ variable "lambda_runtime" {
 variable "lambda_handler" {
   type = string
 }
+
+variable "lambda_sqs_batch_size" {
+  type = number
+}
