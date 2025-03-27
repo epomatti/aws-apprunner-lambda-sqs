@@ -27,7 +27,8 @@ resource "aws_iam_policy" "default" {
         Effect = "Allow"
         Action = [
           "ssm:GetParameter",
-          "kms:Decrypt"
+          "kms:Decrypt",
+          "secretsmanager:GetSecretValue",
         ]
         Resource = [
           "*",
