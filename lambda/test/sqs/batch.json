@@ -1,0 +1,22 @@
+[
+  {
+    "Id": "OK001",
+    "MessageBody": "{\"httpResponseStatus\":200}"
+  },
+  {
+    "Id": "OK002",
+    "MessageBody": "{\"httpResponseStatus\":200}"
+  },
+  {
+    "Id": "OK003",
+    "MessageBody": "{\"httpResponseStatus\":200}"
+  },
+  {
+    "Id": "ERR001",
+    "MessageBody": "{\"httpResponseStatus\":500}"
+  },
+  {
+    "Id": "OK004",
+    "MessageBody": "{\"httpResponseStatus\":200}"
+  }
+]
