@@ -20,6 +20,7 @@ import java.util.List;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+
 import software.amazon.lambda.powertools.logging.Logging;
 
 public class Function implements RequestHandler<SQSEvent, SQSBatchResponse> {
@@ -29,13 +30,18 @@ public class Function implements RequestHandler<SQSEvent, SQSBatchResponse> {
   @Logging
   @Override
   public SQSBatchResponse handleRequest(SQSEvent sqsEvent, Context context) {
+    Monitor monitor = new Monitor();
+    monitor.buildClient();
 
     List<SQSBatchResponse.BatchItemFailure> batchItemFailures = new ArrayList<SQSBatchResponse.BatchItemFailure>();
     for (SQSMessage msg : sqsEvent.getRecords()) {
       try {
         processMessage(msg);
+        monitor.putItem(msg.getMessageId(), "ok");
       } catch (Exception e) {
-        log.error(String.format("An error occurred while processing message [%s]. Adding the message for reprocessing.", msg.getMessageId()), e);
+        log.error(String.format("An error occurred while processing message [%s]. Adding the message for reprocessing.",
+            msg.getMessageId()), e);
+        monitor.putItem(msg.getMessageId(), "err");
         batchItemFailures.add(new SQSBatchResponse.BatchItemFailure(msg.getMessageId()));
       }
     }
@@ -80,6 +86,10 @@ public class Function implements RequestHandler<SQSEvent, SQSBatchResponse> {
     SecretsProvider secretsProvider = ParamManager.getSecretsProvider();
     var key = System.getenv("APP_RUNNER_SECRET_MANAGER_PASSWORD");
     return secretsProvider.get(key);
+  }
+
+  protected void addMonitoring() {
+
   }
 
 }

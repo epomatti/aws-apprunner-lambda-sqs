@@ -10,6 +10,7 @@ repositories {
 dependencies {
     implementation 'com.amazonaws:aws-lambda-java-core:1.2.3'
     implementation 'com.amazonaws:aws-lambda-java-events:3.15.0'
+    implementation 'software.amazon.awssdk:dynamodb:2.31.9'
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.12.1'
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.12.1'
     aspect 'software.amazon.lambda:powertools-logging:1.19.0'
