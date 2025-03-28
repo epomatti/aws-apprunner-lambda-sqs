@@ -1,6 +1,7 @@
 package io.pomatti.lambda;
 
 import java.time.Instant;
+import java.time.temporal.ChronoUnit;
 import java.util.HashMap;
 
 import software.amazon.awssdk.regions.Region;
@@ -21,14 +22,17 @@ public class Monitor {
   }
 
   public void putItem(String sqsMessageId, String status) {
-    String dateString = Instant.now().toString();
+    // Already in ISO 8601
+    var createdAt = Instant.now().truncatedTo(java.time.temporal.ChronoUnit.SECONDS);
+    var expireAt = createdAt.plus(10, ChronoUnit.MINUTES);
 
     HashMap<String, AttributeValue> itemValues = new HashMap<>();
     itemValues.put("sqsMessageId", AttributeValue.builder().s(sqsMessageId).build());
     itemValues.put("status", AttributeValue.builder().s(status).build());
 
     // https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/DynamoDBMapper.DataTypes.html
-    itemValues.put("createdAt", AttributeValue.builder().s(dateString).build());
+    itemValues.put("createdAt", AttributeValue.builder().s(createdAt.toString()).build());
+    itemValues.put("expireAt", AttributeValue.builder().s(expireAt.toString()).build());
 
     PutItemRequest request = PutItemRequest.builder()
         .tableName(MONITOR_TABLE_NAME)
