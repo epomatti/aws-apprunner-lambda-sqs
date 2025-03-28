@@ -45,7 +45,7 @@ public class Function implements RequestHandler<SQSEvent, SQSBatchResponse> {
         batchItemFailures.add(new SQSBatchResponse.BatchItemFailure(msg.getMessageId()));
       }
     }
-    log.error(String.format("Returning %s items to SQS.", batchItemFailures.size()));
+    log.info(String.format("Returning %s items to SQS.", batchItemFailures.size()));
     return new SQSBatchResponse(batchItemFailures);
   }
 
