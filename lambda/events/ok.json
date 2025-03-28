@@ -2,6 +2,9 @@
   "Records": [
     {
       "messageId": "OK001",
+      "attributes": {
+        "ApproximateReceiveCount": "0"
+      },
       "body": "{ \"httpResponseStatus\": 200 }"
     }
   ]

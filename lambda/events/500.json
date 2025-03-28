@@ -2,6 +2,9 @@
   "Records": [
     {
       "messageId": "ERR001",
+      "attributes": {
+        "ApproximateReceiveCount": "0"
+      },
       "body": "{ \"httpResponseStatus\": 500 }"
     }
   ]

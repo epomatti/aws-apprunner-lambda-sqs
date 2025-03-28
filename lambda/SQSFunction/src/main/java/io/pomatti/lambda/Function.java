@@ -37,11 +37,11 @@ public class Function implements RequestHandler<SQSEvent, SQSBatchResponse> {
     for (SQSMessage msg : sqsEvent.getRecords()) {
       try {
         processMessage(msg);
-        monitor.putItem(msg.getMessageId(), "ok");
+        monitor.putItemOk(msg);
       } catch (Exception e) {
         log.error(String.format("An error occurred while processing message [%s]. Adding the message for reprocessing.",
             msg.getMessageId()), e);
-        monitor.putItem(msg.getMessageId(), "err");
+        monitor.putItemError(msg);
         batchItemFailures.add(new SQSBatchResponse.BatchItemFailure(msg.getMessageId()));
       }
     }

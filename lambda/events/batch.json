@@ -2,14 +2,23 @@
   "Records": [
     {
       "messageId": "ERR001",
+      "attributes": {
+        "ApproximateReceiveCount": "0"
+      },
       "body": "{ \"httpResponseStatus\": 500 }"
     },
     {
       "messageId": "OK001",
+      "attributes": {
+        "ApproximateReceiveCount": "0"
+      },
       "body": "{ \"httpResponseStatus\": 200 }"
     },
     {
       "messageId": "OK002",
+      "attributes": {
+        "ApproximateReceiveCount": "0"
+      },
       "body": "{ \"httpResponseStatus\": 200 }"
     }
   ]
