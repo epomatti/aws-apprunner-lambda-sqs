@@ -24,8 +24,9 @@ module "ecr" {
 }
 
 module "sqs_cloud" {
-  source   = "./modules/sqs/cloud"
-  workload = var.workload
+  source                     = "./modules/sqs/cloud"
+  workload                   = var.workload
+  visibility_timeout_seconds = var.lambda_sqs_visibility_timeout_seconds
 }
 
 module "sqs_local" {

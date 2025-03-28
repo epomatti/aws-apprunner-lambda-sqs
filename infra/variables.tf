@@ -71,3 +71,7 @@ variable "lambda_handler" {
 variable "lambda_sqs_batch_size" {
   type = number
 }
+
+variable "lambda_sqs_visibility_timeout_seconds" {
+  type = number
+}
