@@ -89,8 +89,4 @@ public class Function implements RequestHandler<SQSEvent, SQSBatchResponse> {
     return secretsProvider.get(key);
   }
 
-  protected void addMonitoring() {
-
-  }
-
 }
