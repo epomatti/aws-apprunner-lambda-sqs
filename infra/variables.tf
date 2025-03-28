@@ -75,3 +75,7 @@ variable "lambda_sqs_batch_size" {
 variable "lambda_sqs_visibility_timeout_seconds" {
   type = number
 }
+
+variable "lambda_sqs_maximum_concurrency" {
+  type = number
+}

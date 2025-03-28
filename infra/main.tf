@@ -100,6 +100,7 @@ module "lambda" {
   apprunner_username    = var.lambda_username
   lambda_secret_name    = module.secrets.lambda_secret_name
   lambda_sqs_batch_size = var.lambda_sqs_batch_size
+  maximum_concurrency   = var.lambda_sqs_maximum_concurrency
 
   depends_on = [module.iam_lambda, module.apprunner]
 }

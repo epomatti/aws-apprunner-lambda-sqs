@@ -53,3 +53,7 @@ variable "apprunner_username" {
 variable "lambda_sqs_batch_size" {
   type = number
 }
+
+variable "maximum_concurrency" {
+  type = number
+}

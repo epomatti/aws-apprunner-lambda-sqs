@@ -25,5 +25,4 @@ lambda_runtime                        = "java21"
 lambda_handler                        = "io.pomatti.lambda.Function::handleRequest"
 lambda_sqs_batch_size                 = 10
 lambda_sqs_visibility_timeout_seconds = 31
-
-### SQS ###
+lambda_sqs_maximum_concurrency        = 3
