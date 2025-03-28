@@ -44,7 +44,7 @@ public class Monitor {
 
     // https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/DynamoDBMapper.DataTypes.html
     itemValues.put("createdAt", AttributeValue.builder().s(createdAt.toString()).build());
-    itemValues.put("expireAt", AttributeValue.builder().s(expireAt.toString()).build());
+    itemValues.put("expireAt", AttributeValue.builder().s(String.valueOf(expireAt.toEpochMilli())).build());
 
     PutItemRequest request = PutItemRequest.builder()
         .tableName(MONITOR_TABLE_NAME)

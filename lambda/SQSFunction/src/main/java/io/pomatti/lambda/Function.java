@@ -3,6 +3,7 @@ package io.pomatti.lambda;
 import com.amazonaws.services.lambda.runtime.Context;
 import com.amazonaws.services.lambda.runtime.RequestHandler;
 import com.amazonaws.services.lambda.runtime.events.SQSBatchResponse;
+import com.amazonaws.services.lambda.runtime.events.SQSBatchResponse.BatchItemFailure;
 import com.amazonaws.services.lambda.runtime.events.SQSEvent;
 import com.amazonaws.services.lambda.runtime.events.SQSEvent.SQSMessage;
 import software.amazon.lambda.powertools.parameters.SecretsProvider;
@@ -33,7 +34,7 @@ public class Function implements RequestHandler<SQSEvent, SQSBatchResponse> {
     Monitor monitor = new Monitor();
     monitor.buildClient();
 
-    List<SQSBatchResponse.BatchItemFailure> batchItemFailures = new ArrayList<SQSBatchResponse.BatchItemFailure>();
+    List<BatchItemFailure> batchItemFailures = new ArrayList<>();
     for (SQSMessage msg : sqsEvent.getRecords()) {
       try {
         processMessage(msg);
@@ -42,7 +43,7 @@ public class Function implements RequestHandler<SQSEvent, SQSBatchResponse> {
         log.error(String.format("An error occurred while processing message [%s]. Adding the message for reprocessing.",
             msg.getMessageId()), e);
         monitor.putItemError(msg);
-        batchItemFailures.add(new SQSBatchResponse.BatchItemFailure(msg.getMessageId()));
+        batchItemFailures.add(new BatchItemFailure(msg.getMessageId()));
       }
     }
     log.info(String.format("Returning %s items to SQS.", batchItemFailures.size()));
