@@ -5,6 +5,11 @@ resource "aws_dynamodb_table" "lambda" {
   hash_key                    = "sqsMessageId"
   deletion_protection_enabled = false
 
+  ttl {
+    attribute_name = "expireAt"
+    enabled        = true
+  }
+
   server_side_encryption {
     enabled = true
   }
