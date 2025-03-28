@@ -19,6 +19,10 @@ resource "aws_lambda_function" "sqs" {
   memory_size = var.memory_size
   timeout     = var.timeout
 
+  snap_start {
+    apply_on = var.lambda_snap_start
+  }
+
   environment {
     variables = {
       APP_RUNNER_SECRET_MANAGER_PASSWORD = var.lambda_secret_name

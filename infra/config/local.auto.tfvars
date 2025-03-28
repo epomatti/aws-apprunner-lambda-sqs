@@ -23,6 +23,7 @@ lambda_architectures                  = ["arm64"]
 lambda_handler_zip                    = "java/lambda-java.zip"
 lambda_runtime                        = "java21"
 lambda_handler                        = "io.pomatti.lambda.Function::handleRequest"
+lambda_snap_start                     = "PublishedVersions"
 lambda_sqs_batch_size                 = 10
 lambda_sqs_visibility_timeout_seconds = 31
 lambda_sqs_maximum_concurrency        = 3

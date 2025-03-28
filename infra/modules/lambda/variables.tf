@@ -46,6 +46,10 @@ variable "lambda_secret_name" {
   type = string
 }
 
+variable "lambda_snap_start" {
+  type = string
+}
+
 variable "apprunner_username" {
   type = string
 }

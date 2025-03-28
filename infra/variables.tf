@@ -68,6 +68,10 @@ variable "lambda_handler" {
   type = string
 }
 
+variable "lambda_snap_start" {
+  type = string
+}
+
 variable "lambda_sqs_batch_size" {
   type = number
 }

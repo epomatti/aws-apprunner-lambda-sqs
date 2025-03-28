@@ -67,6 +67,10 @@ sam deploy --template-file template.yaml \
   --capabilities CAPABILITY_IAM \
   --parameter-overrides S3BucketName=my-bucket S3KeyName=my-folder/my-code.zip
 
+
+aws sqs send-message-batch --queue-url https://sqs.us-east-2.amazonaws.com/00000000000000/litware-payments --entries file://test/sqs/batch.json
+
+
 ## Error Handling
 // https://docs.aws.amazon.com/lambda/latest/dg/services-sqs-errorhandling.html
 

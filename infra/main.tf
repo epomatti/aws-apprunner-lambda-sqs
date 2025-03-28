@@ -98,6 +98,7 @@ module "lambda" {
   sqs_trigger_enabled   = var.lambda_sqs_trigger_enabled
   apprunner_service_url = module.apprunner[0].service_url
   apprunner_username    = var.lambda_username
+  lambda_snap_start     = var.lambda_snap_start
   lambda_secret_name    = module.secrets.lambda_secret_name
   lambda_sqs_batch_size = var.lambda_sqs_batch_size
   maximum_concurrency   = var.lambda_sqs_maximum_concurrency
