@@ -11,6 +11,10 @@ provider "aws" {
   region = var.aws_region
 }
 
+locals {
+  lambda_function_name = ""
+}
+
 module "vpc" {
   source             = "./modules/vpc"
   aws_region         = var.aws_region
@@ -79,8 +83,10 @@ module "dynamodb" {
 }
 
 module "iam_lambda" {
-  source   = "./modules/iam/lambda"
-  workload = var.workload
+  source        = "./modules/iam/lambda"
+  workload      = var.workload
+  function_name = var.workload
+  aws_region    = var.aws_region
 }
 
 module "lambda" {
