@@ -102,6 +102,8 @@ module "lambda" {
   lambda_secret_name    = module.secrets.lambda_secret_name
   lambda_sqs_batch_size = var.lambda_sqs_batch_size
   maximum_concurrency   = var.lambda_sqs_maximum_concurrency
+  vpc_id                = module.vpc.vpc_id
+  private_subnets       = module.vpc.private_subnets
 
   depends_on = [module.iam_lambda, module.apprunner]
 }

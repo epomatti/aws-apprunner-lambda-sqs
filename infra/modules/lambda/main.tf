@@ -5,7 +5,6 @@ locals {
 # TODO: X-Ray
 # TODO: CloudWatch Application Insights
 # TODO: Structured Logging
-# TODO: dead_letter_config
 resource "aws_lambda_function" "sqs" {
   function_name    = var.name
   description      = "Lambda function for processing SQS messages"
@@ -23,6 +22,11 @@ resource "aws_lambda_function" "sqs" {
     apply_on = var.lambda_snap_start
   }
 
+  vpc_config {
+    subnet_ids         = var.private_subnets
+    security_group_ids = [aws_security_group.lambda.id]
+  }
+
   environment {
     variables = {
       APP_RUNNER_SECRET_MANAGER_PASSWORD = var.lambda_secret_name
@@ -30,9 +34,6 @@ resource "aws_lambda_function" "sqs" {
       APP_RUNNER_USERNAME                = var.apprunner_username
     }
   }
-
-  # https://docs.aws.amazon.com/systems-manager/latest/userguide/ps-integration-lambda-extensions.html#ps-integration-lambda-extensions-add
-  # layers = ["arn:aws:lambda:us-east-2:590474943231:layer:AWS-Parameters-and-Secrets-Lambda-Extension:11"]
 
   lifecycle {
     ignore_changes = [
@@ -53,4 +54,33 @@ resource "aws_lambda_event_source_mapping" "sqs" {
   scaling_config {
     maximum_concurrency = var.maximum_concurrency
   }
+}
+
+
+resource "aws_security_group" "lambda" {
+  name        = "lambda-vpc"
+  description = "Allow TLS outbound Lambda traffic"
+  vpc_id      = var.vpc_id
+
+  tags = {
+    Name = "sg-lambda-vpc"
+  }
+}
+
+resource "aws_security_group_rule" "egress_http" {
+  type              = "egress"
+  from_port         = 80
+  to_port           = 80
+  protocol          = "TCP"
+  cidr_blocks       = ["0.0.0.0/0"]
+  security_group_id = aws_security_group.lambda.id
+}
+
+resource "aws_security_group_rule" "egress_https" {
+  type              = "egress"
+  from_port         = 443
+  to_port           = 443
+  protocol          = "TCP"
+  cidr_blocks       = ["0.0.0.0/0"]
+  security_group_id = aws_security_group.lambda.id
 }

@@ -61,3 +61,11 @@ variable "lambda_sqs_batch_size" {
 variable "maximum_concurrency" {
   type = number
 }
+
+variable "private_subnets" {
+  type = list(string)
+}
+
+variable "vpc_id" {
+  type = string
+}
