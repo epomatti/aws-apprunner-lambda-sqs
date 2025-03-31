@@ -69,3 +69,19 @@ variable "private_subnets" {
 variable "vpc_id" {
   type = string
 }
+
+variable "lambda_log_format" {
+  type = string
+}
+
+variable "lambda_log_group_name" {
+  type = string
+}
+
+variable "lambda_application_log_level" {
+  type = string
+}
+
+variable "lambda_system_log_level" {
+  type = string
+}

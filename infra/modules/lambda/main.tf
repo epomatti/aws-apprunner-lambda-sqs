@@ -27,6 +27,13 @@ resource "aws_lambda_function" "sqs" {
     security_group_ids = [aws_security_group.lambda.id]
   }
 
+  logging_config {
+    log_format            = var.lambda_log_format
+    log_group             = var.lambda_log_group_name
+    application_log_level = var.lambda_application_log_level
+    system_log_level      = var.lambda_system_log_level
+  }
+
   environment {
     variables = {
       APP_RUNNER_SECRET_MANAGER_PASSWORD = var.lambda_secret_name

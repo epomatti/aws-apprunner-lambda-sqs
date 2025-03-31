@@ -83,3 +83,15 @@ variable "lambda_sqs_visibility_timeout_seconds" {
 variable "lambda_sqs_maximum_concurrency" {
   type = number
 }
+
+variable "lambda_log_format" {
+  type = string
+}
+
+variable "lambda_application_log_level" {
+  type = string
+}
+
+variable "lambda_system_log_level" {
+  type = string
+}
