@@ -10,6 +10,11 @@ Copy the variables template files:
 cp infra/config/local.auto.tfvars infra/.auto.tfvars
 ```
 
+Go to the
+
+> [!IMPORTANT]
+> Enable Lambda Application Insights
+
 Create the infrastructure:
 
 ```sh
