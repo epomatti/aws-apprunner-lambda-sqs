@@ -39,8 +39,13 @@ resource "aws_lambda_function" "sqs" {
       APP_RUNNER_SECRET_MANAGER_PASSWORD = var.lambda_secret_name
       APP_RUNNER_URL                     = "https://${var.apprunner_service_url}"
       APP_RUNNER_USERNAME                = var.apprunner_username
+      AWS_LAMBDA_EXEC_WRAPPER            = "/opt/otel-instrument"
     }
   }
+
+  layers = [
+    "arn:aws:lambda:us-east-2:615299751070:layer:AWSOpenTelemetryDistroJava:4",
+  ]
 
   lifecycle {
     ignore_changes = [
