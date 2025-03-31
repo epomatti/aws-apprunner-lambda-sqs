@@ -2,18 +2,16 @@ locals {
   filename = "${path.module}/handlers/${var.lambda_handler_zip}"
 }
 
-# TODO: X-Ray
-# TODO: CloudWatch Application Insights
-# TODO: Structured Logging
 resource "aws_lambda_function" "sqs" {
-  function_name    = var.name
-  description      = "Lambda function for processing SQS messages"
-  role             = var.execution_role_arn
-  filename         = local.filename
-  source_code_hash = filebase64sha256(local.filename)
-  architectures    = var.lambda_architectures
-  runtime          = var.lambda_runtime
-  handler          = var.lambda_handler
+  function_name                      = var.name
+  description                        = "Lambda function for processing SQS messages"
+  role                               = var.execution_role_arn
+  filename                           = local.filename
+  source_code_hash                   = filebase64sha256(local.filename)
+  architectures                      = var.lambda_architectures
+  runtime                            = var.lambda_runtime
+  handler                            = var.lambda_handler
+  replace_security_groups_on_destroy = true
 
   memory_size = var.memory_size
   timeout     = var.timeout
