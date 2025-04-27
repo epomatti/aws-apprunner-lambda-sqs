@@ -104,13 +104,7 @@ lambda_runtime     = "python3.13"
 lambda_handler     = "app.lambda_handler"
 ```
 
-## Limitations
+## Reference
 
-Timeouts
-Message size
-Authentication
-Reprocessing / Dead letter queues
-
-
-
-https://docs.aws.amazon.com/systems-manager/latest/userguide/ps-integration-lambda-extensions.html
+- [Parameter Store with Lambda](https://docs.aws.amazon.com/systems-manager/latest/userguide/ps-integration-lambda-extensions.html)
+- [Makefile variables](https://earthly.dev/blog/makefile-variables/)
