@@ -25,6 +25,7 @@ resource "aws_vpc_endpoint_policy" "main" {
   policy = jsonencode({
     Statement = [
       {
+        Sid = "AppRunner"
         Action = [
           "sqs:SendMessage"
         ]
@@ -32,6 +33,17 @@ resource "aws_vpc_endpoint_policy" "main" {
         Resource = "${var.sqs_queue_arn}"
         Principal = {
           AWS = "${var.apprunner_instance_role_arn}"
+        }
+      },
+      {
+        Sid = "Lambda"
+        Action = [
+          "sqs:*"
+        ]
+        Effect   = "Allow"
+        Resource = "${var.sqs_queue_arn}"
+        Principal = {
+          AWS = "${var.lambda_execution_role_arn}"
         }
       }
     ]

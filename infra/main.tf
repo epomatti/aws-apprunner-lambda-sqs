@@ -135,6 +135,7 @@ module "vpce_sqs" {
   vpc_id                      = module.vpc.vpc_id
   subnet_id                   = module.vpc.vpce_subnet
   apprunner_instance_role_arn = module.iam_apprunner.instance_role_arn
+  lambda_execution_role_arn   = module.iam_lambda.execution_role_arn
   sqs_queue_arn               = module.sqs_cloud.payments_queue_arn
 }
 
@@ -142,6 +143,7 @@ module "vpce_policies" {
   source                      = "./modules/vpce/policies"
   sqs_queue_url               = module.sqs_cloud.payments_queue_url
   apprunner_instance_role_arn = module.iam_apprunner.instance_role_arn
+  lambda_execution_role_arn   = module.iam_lambda.execution_role_arn
   sqs_queue_arn               = module.sqs_cloud.payments_queue_arn
   vpce_sqs_id                 = module.vpce_sqs.vpce_sqs_id
 }

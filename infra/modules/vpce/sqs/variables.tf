@@ -21,3 +21,7 @@ variable "sqs_queue_arn" {
 variable "apprunner_instance_role_arn" {
   type = string
 }
+
+variable "lambda_execution_role_arn" {
+  type = string
+}

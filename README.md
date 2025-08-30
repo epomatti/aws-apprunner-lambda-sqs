@@ -66,7 +66,15 @@ To enqueue new messages:
 
 ```sh
 # With BASIC authentication
-curl -X POST https://example.com/api/enqueue
+curl -X POST -d "response status" https://example.com/api/enqueue
+```
+
+For the process API, this should be sent via Lambda, but with for direct tests:
+
+```json
+{
+	"httpResponseStatus": 200
+}
 ```
 
 ## Authentication
