@@ -27,6 +27,10 @@ resource "aws_apprunner_service" "main" {
       image_configuration {
         port = "8080"
 
+        runtime_environment_variables = {
+          SQS_QUEUE_URL = "${var.sqs_queue_url}"
+        }
+
         runtime_environment_secrets = {
           LAMBDA_USERNAME = "${var.ssm_lambda_username_secret_arn}"
           LAMBDA_PASSWORD = "${var.ssm_lambda_password_secret_arn}"

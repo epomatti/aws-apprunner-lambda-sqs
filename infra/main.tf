@@ -72,6 +72,7 @@ module "apprunner" {
   instance_role_arn = module.iam_apprunner.instance_role_arn
   access_role_arn   = module.iam_apprunner.access_role_arn
 
+  sqs_queue_url                  = module.sqs_cloud.payments_queue_url
   ssm_lambda_username_secret_arn = module.ssm.lambda_username_secret_arn
   ssm_lambda_password_secret_arn = module.ssm.lambda_password_secret_arn
 
