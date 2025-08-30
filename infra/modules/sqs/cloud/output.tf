@@ -1,3 +1,8 @@
+output "payments_queue_url" {
+  value = aws_sqs_queue.payments.url
+
+}
+
 output "payments_queue_arn" {
   value = aws_sqs_queue.payments.arn
 }

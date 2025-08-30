@@ -35,6 +35,15 @@ Flag the App Runner for deployment and re-apply the infrastructure:
 enable_app_runner = true
 ```
 
+## VPC Endpoints
+
+VPC Endpoint access is implemented via [endpoint policies](https://docs.aws.amazon.com/vpc/latest/privatelink/vpc-endpoints-access.html).
+
+Additional configuration and requirements are needed for VPC connectivity. Check the [requirements](https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/sqs-internetwork-traffic-privacy.html) that fit your use case.
+
+Traffic can be denied from outside the VPC. Check the [example 5](https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/sqs-creating-custom-policies-access-policy-examples.html#deny-not-from-vpc).
+
+
 ## Local Development
 
 > [!TIP]

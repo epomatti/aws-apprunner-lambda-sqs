@@ -10,3 +10,6 @@ output "public_subnets" {
   value = [aws_subnet.public1.id]
 }
 
+output "vpce_subnet" {
+  value = aws_subnet.vpce.id
+}

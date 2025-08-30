@@ -46,6 +46,17 @@ resource "aws_subnet" "private1" {
   }
 }
 
+resource "aws_subnet" "vpce" {
+  vpc_id                  = aws_vpc.main.id
+  cidr_block              = "${local.cidr_block_prefix}.111.0/24"
+  availability_zone       = local.availability_zone_1
+  map_public_ip_on_launch = false
+
+  tags = {
+    Name = "subnet-${var.workload}-vpce"
+  }
+}
+
 ### Route Tables ###
 
 resource "aws_route_table" "public1" {
@@ -64,6 +75,14 @@ resource "aws_route_table" "private1" {
   }
 }
 
+resource "aws_route_table" "vpce" {
+  vpc_id = aws_vpc.main.id
+
+  tags = {
+    Name = "rt-${var.workload}-vpce"
+  }
+}
+
 ### Route Table Associations ###
 resource "aws_route_table_association" "public1" {
   subnet_id      = aws_subnet.public1.id
@@ -73,6 +92,11 @@ resource "aws_route_table_association" "public1" {
 resource "aws_route_table_association" "private1" {
   subnet_id      = aws_subnet.private1.id
   route_table_id = aws_route_table.private1.id
+}
+
+resource "aws_route_table_association" "vpce" {
+  subnet_id      = aws_subnet.vpce.id
+  route_table_id = aws_route_table.vpce.id
 }
 
 ### NAT Gateway ###
