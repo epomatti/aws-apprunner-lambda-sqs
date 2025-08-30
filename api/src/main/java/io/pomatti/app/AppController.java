@@ -27,7 +27,7 @@ public class AppController {
 		SqsClient sqsClient = SqsClient.builder()
 				.region(Region.US_EAST_2)
 				.build();
-		SQSUtils.sendMessage(sqsClient, "easybank-payments", "Hello, World!");
+		SQSUtils.sendMessage(sqsClient, "litware-payments", "Hello, World!");
 		logger.info("Message sent!");
 		return ResponseEntity.ok().build();
 	}
