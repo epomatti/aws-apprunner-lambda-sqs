@@ -60,6 +60,15 @@ curl -I -u lambda:p4ssw0rd localhost:8080
 ```
 
 
+## API
+
+To enqueue new messages:
+
+```sh
+# With BASIC authentication
+curl -X POST https://example.com/api/enqueue
+```
+
 ## Authentication
 
 The application will use default Spring Security auto-configuration with the following credentials:
