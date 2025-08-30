@@ -38,4 +38,10 @@ public class AppController {
 		return ResponseEntity.status(request.getHttpResponseStatus()).build();
 	}
 
+	@GetMapping("/api/secret")
+	public ResponseEntity<?> getSecret() {
+		String secret = SecretsManagerUtils.getSecret();
+		return ResponseEntity.ok(secret);
+	}
+
 }

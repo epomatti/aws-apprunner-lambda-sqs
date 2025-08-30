@@ -49,7 +49,8 @@ module "secrets" {
 }
 
 module "iam_apprunner" {
-  source = "./modules/iam/apprunner"
+  source            = "./modules/iam/apprunner"
+  lambda_secret_arn = module.secrets.lambda_secret_arn
 }
 
 module "ssm" {

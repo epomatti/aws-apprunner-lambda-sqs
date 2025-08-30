@@ -59,7 +59,6 @@ Test the API:
 curl -I -u lambda:p4ssw0rd localhost:8080
 ```
 
-
 ## API
 
 To enqueue new messages:
@@ -75,6 +74,12 @@ For the process API, this should be sent via Lambda, but with for direct tests:
 {
 	"httpResponseStatus": 200
 }
+```
+
+To get a Secrets Manager string value:
+
+```sh
+curl https://example.com/api/secret
 ```
 
 ## Authentication

@@ -27,6 +27,32 @@ resource "aws_iam_role_policy_attachment" "instance_2" {
   policy_arn = aws_iam_policy.default.arn
 }
 
+resource "aws_iam_role_policy_attachment" "instance_role_secrets_manager" {
+  role       = aws_iam_role.instance_role.name
+  policy_arn = aws_iam_policy.secrets_manager_policy.arn
+}
+
+resource "aws_iam_policy" "secrets_manager_policy" {
+  name = "apprunner-secrets-manager-policy"
+
+  policy = jsonencode({
+    Version = "2012-10-17"
+    Statement = [
+      {
+        Sid    = "AppRunnerSecretsManager"
+        Effect = "Allow"
+        Action = [
+          "secretsmanager:GetSecretValue"
+        ]
+        Resource = [
+          "${var.lambda_secret_arn}",
+        ]
+      }
+    ]
+  })
+}
+
+
 ### Access Role ###
 resource "aws_iam_role" "access_role" {
   name = "AppRunnerAccessRole"
