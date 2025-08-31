@@ -13,6 +13,11 @@ app_runner_memory = "4 GB"
 ### NAT Gateway ###
 create_nat_gateway = true
 
+### EC2 Jump Server ###
+create_jumpserver            = true
+ec2_jumpserver_ami           = "ami-03d9fcc39480315d4"
+ec2_jumpserver_instance_type = "t4g.micro"
+
 ### Lambda ###
 lambda_memory_size         = 1024
 lambda_timeout             = 30

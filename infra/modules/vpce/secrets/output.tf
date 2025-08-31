@@ -1,3 +1,3 @@
-output "vpce_sqs_id" {
-  value = aws_vpc_endpoint.sqs.id
+output "vpce_secretsmanager_id" {
+  value = aws_vpc_endpoint.secretsmanager.id
 }

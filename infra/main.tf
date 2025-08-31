@@ -140,6 +140,16 @@ module "vpce_sqs" {
   sqs_queue_arn               = module.sqs_cloud.payments_queue_arn
 }
 
+module "vpce_secretsmanager" {
+  source                      = "./modules/vpce/secrets"
+  affix                       = "secretsmanager"
+  aws_region                  = var.aws_region
+  vpc_id                      = module.vpc.vpc_id
+  subnet_id                   = module.vpc.vpce_subnet
+  apprunner_instance_role_arn = module.iam_apprunner.instance_role_arn
+  lambda_secret_arn           = module.secrets.lambda_secret_arn
+}
+
 module "vpce_policies" {
   source                      = "./modules/vpce/policies"
   sqs_queue_url               = module.sqs_cloud.payments_queue_url
@@ -147,4 +157,18 @@ module "vpce_policies" {
   lambda_execution_role_arn   = module.iam_lambda.execution_role_arn
   sqs_queue_arn               = module.sqs_cloud.payments_queue_arn
   vpce_sqs_id                 = module.vpce_sqs.vpce_sqs_id
+  secret_arn                  = module.secrets.lambda_secret_arn
+  vpce_secretsmanager_id      = module.vpce_secretsmanager.vpce_secretsmanager_id
+}
+
+module "ec2_jumpserver" {
+  count         = var.create_jumpserver ? 1 : 0
+  source        = "./modules/ec2-jumpserver"
+  workload      = var.workload
+  subnet        = module.vpc.private_subnets[0]
+  vpc_id        = module.vpc.vpc_id
+  ami           = var.ec2_jumpserver_ami
+  instance_type = var.ec2_jumpserver_instance_type
+
+  depends_on = [module.vpc]
 }

@@ -17,3 +17,11 @@ variable "sqs_queue_arn" {
 variable "vpce_sqs_id" {
   type = string
 }
+
+variable "secret_arn" {
+  type = string
+}
+
+variable "vpce_secretsmanager_id" {
+  type = string
+}

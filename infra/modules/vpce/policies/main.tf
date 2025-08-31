@@ -7,19 +7,20 @@ resource "aws_sqs_queue_policy" "vpce" {
   policy = jsonencode({
     "Version" : "2012-10-17",
     "Id" : "DenyNotFromVPCE",
-    "Statement" : [{
-      "Sid" : "1",
-      "Effect" : "Allow",
-      "Principal" : {
-        "AWS" : [
-          "${var.apprunner_instance_role_arn}"
-        ]
-      },
-      "Action" : [
-        "sqs:SendMessage",
-        "sqs:ReceiveMessage"
-      ],
-      "Resource" : "${var.sqs_queue_arn}"
+    "Statement" : [
+      {
+        "Sid" : "1",
+        "Effect" : "Allow",
+        "Principal" : {
+          "AWS" : [
+            "${var.apprunner_instance_role_arn}"
+          ]
+        },
+        "Action" : [
+          "sqs:SendMessage",
+          "sqs:ReceiveMessage"
+        ],
+        "Resource" : "${var.sqs_queue_arn}"
       },
       {
         "Sid" : "3",
@@ -46,6 +47,45 @@ resource "aws_sqs_queue_policy" "vpce" {
       #   "Condition" : {
       #     "StringNotEquals" : {
       #       "aws:sourceVpce" : "${var.vpce_sqs_id}"
+      #     }
+      #   }
+      # }
+    ]
+    }
+  )
+}
+
+resource "aws_secretsmanager_secret_policy" "secretsmanager_vpce" {
+  secret_arn = var.secret_arn
+
+  policy = jsonencode({
+    "Version" : "2012-10-17",
+    "Id" : "DenySecretsManagerNotFromVPCE",
+    "Statement" : [
+      {
+        "Sid" : "1",
+        "Effect" : "Allow",
+        "Principal" : {
+          "AWS" : [
+            "${var.apprunner_instance_role_arn}"
+          ]
+        },
+        "Action" : [
+          "secretsmanager:GetSecretValue"
+        ],
+        "Resource" : "${var.secret_arn}"
+      },
+      # {
+      #   "Sid" : "2",
+      #   "Effect" : "Deny",
+      #   "Principal" : "*",
+      #   "Action" : [
+      #     "secretsmanager:GetSecretValue"
+      #   ],
+      #   "Resource" : "${var.secret_arn}",
+      #   "Condition" : {
+      #     "StringNotEquals" : {
+      #       "aws:sourceVpce" : "${var.vpce_secretsmanager_id}"
       #     }
       #   }
       # }

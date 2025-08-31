@@ -1,42 +1,31 @@
-resource "aws_vpc_endpoint" "sqs" {
+resource "aws_vpc_endpoint" "secretsmanager" {
   vpc_id              = var.vpc_id
-  service_name        = "com.amazonaws.${var.aws_region}.sqs"
+  service_name        = "com.amazonaws.${var.aws_region}.secretsmanager"
   vpc_endpoint_type   = "Interface"
   private_dns_enabled = true
 
-  tags = {
-    Name = "sqs-vpce"
-  }
-}
-
-resource "aws_vpc_endpoint_subnet_association" "private_subnet" {
-  vpc_endpoint_id = aws_vpc_endpoint.sqs.id
-  subnet_id       = var.subnet_id
-}
-
-resource "aws_vpc_endpoint_security_group_association" "sg_aws_service" {
-  vpc_endpoint_id   = aws_vpc_endpoint.sqs.id
-  security_group_id = aws_security_group.aws_service.id
-}
-
-resource "aws_vpc_endpoint_policy" "main" {
-  vpc_endpoint_id = aws_vpc_endpoint.sqs.id
+  subnet_ids         = [var.subnet_id]
+  security_group_ids = [aws_security_group.aws_service.id]
 
   policy = jsonencode({
     Statement = [
       {
         Sid = "AppRunner"
         Action = [
-          "sqs:SendMessage"
+          "secretsmanager:GetSecretValue"
         ]
         Effect   = "Allow"
-        Resource = "${var.sqs_queue_arn}"
+        Resource = "${var.lambda_secret_arn}"
         Principal = {
           AWS = "${var.apprunner_instance_role_arn}"
         }
       }
     ]
   })
+
+  tags = {
+    Name = "secretsmanager-vpce"
+  }
 }
 
 data "aws_vpc" "selected" {
@@ -44,12 +33,12 @@ data "aws_vpc" "selected" {
 }
 
 resource "aws_security_group" "aws_service" {
-  name        = "vpce-sqs-${var.affix}-sg"
+  name        = "vpce-secretsmanager-${var.affix}-sg"
   description = "Allow AWS Service connectivity via Interface Endpoints"
   vpc_id      = var.vpc_id
 
   tags = {
-    Name = "sg-vpce-sqs-${var.affix}"
+    Name = "sg-vpce-secretsmanager-${var.affix}"
   }
 }
 

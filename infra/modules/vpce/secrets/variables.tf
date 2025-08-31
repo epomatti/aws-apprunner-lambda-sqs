@@ -14,7 +14,7 @@ variable "subnet_id" {
   type = string
 }
 
-variable "sm_secret_arn" {
+variable "lambda_secret_arn" {
   type = string
 }
 

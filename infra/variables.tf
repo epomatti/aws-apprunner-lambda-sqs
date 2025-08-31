@@ -30,6 +30,19 @@ variable "create_nat_gateway" {
   type = bool
 }
 
+### EC2 Jump Server ###
+variable "create_jumpserver" {
+  type = bool
+}
+
+variable "ec2_jumpserver_ami" {
+  type = string
+}
+
+variable "ec2_jumpserver_instance_type" {
+  type = string
+}
+
 ### Lambda ###
 variable "lambda_handler_zip" {
   type = string
