@@ -43,6 +43,20 @@ Additional configuration and requirements are needed for VPC connectivity. Check
 
 Traffic can be denied from outside the VPC. Check the [example 5](https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/sqs-creating-custom-policies-access-policy-examples.html#deny-not-from-vpc).
 
+Checking resolution:
+
+```sh
+dig secretsmanager.us-east-2.amazonaws.com
+```
+
+Network connectivity:
+
+```sh
+# Expect an error response
+curl https://secretsmanager.us-east-2.amazonaws.com
+```
+
+Real access needs to be tested with approved credentials.
 
 ## Local Development
 
